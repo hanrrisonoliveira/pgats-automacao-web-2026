@@ -23,7 +23,8 @@ const seletores = {
   contaCriada: '[data-qa="account-created"]',
   continuar: '[data-qa="continue-button"]',
   excluirConta: 'a[href="/delete_account"]',
-  contaExcluida: '[data-qa="account-deleted"]'
+  contaExcluida: '[data-qa="account-deleted"]',
+  mensagemEmailExistente: 'form[action*=signup] p'
 };
 
 function iniciarCadastro(usuario) {
@@ -72,6 +73,12 @@ function validarContaExcluida() {
   cy.get(seletores.contaExcluida).should('be.visible').and('contain', 'Account Deleted!');
 }
 
+function validarEmailJaCadastrado() {
+  cy.get(seletores.mensagemEmailExistente)
+    .should('be.visible')
+    .and('contain', 'Email Address already exist!');
+}
+
 module.exports = {
   iniciarCadastro,
   preencherDadosDaConta,
@@ -79,5 +86,6 @@ module.exports = {
   validarContaCriada,
   continuar,
   excluirConta,
-  validarContaExcluida
+  validarContaExcluida,
+  validarEmailJaCadastrado
 };

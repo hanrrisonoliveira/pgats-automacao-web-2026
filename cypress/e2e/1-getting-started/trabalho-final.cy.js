@@ -53,7 +53,7 @@ describe('Automation Exercise', () => {
 
   });
 
-  it.only('Test Case 3: Login User with incorrect email and password', () => {
+  it('Test Case 3: Login User with incorrect email and password', () => {
     login.acessarLogin()
 
     login.efetuarLogin('pgats-aut-test-1791030872114@mail.com', '54321')
@@ -62,44 +62,20 @@ describe('Automation Exercise', () => {
   });
 
   it('Test Case 4: Logout User', () => {
-    cy.visit('https://www.automationexercise.com/login')
-
-    // ACT
-    cy.get('[data-qa="login-email"]').type('pgats-aut-test-1791030872114@mail.com')
-    cy.get('[data-qa="login-password"]').type('12345')
-    cy.get('[data-qa="login-button"]').click()
-
-    // assert do login
-    cy.get('a[href*="logout"]')
-      .should('be.visible')
-      .click()
-
-    cy.get('.login-form > h2').should('be.visible')
-    cy.get('a[href*="logout"]').should('not.exist')
-    cy.get('[action*="login"]').should('be.visible');
-    cy.url().should('include', 'login')
-
-    // https://www.automationexercise.com/login -> 'login'
+    login.acessarLogin()
+    login.efetuarLogin('pgats-aut-test-1791030872114@mail.com', '12345')
+    login.efetuarLogout()
+    login.validarLogout()
 
   });
 
   it('Test Case 5: Register User with existing email', () => {
-    cy.visit('https://www.automationexercise.com')
-    cy.get('a[href*=login]').click()
-
-    // const timestamp = new Date().getTime()
-
-    cy.get('[data-qa="signup-name"]').type(`PGATS Aut`)
-    // cy.get('[data-qa="signup-email"]').type(`pgats-aut-test-${timestamp}@mail.com`)
-    cy.get('[data-qa="signup-email"]').type(`pgats-aut-test-1791030872114@mail.com`)
-
-    cy.get('[data-qa="signup-button"]').click()
-
-    cy.get('form[action*=signup] p')
-      .should('exist')
-      .should('be.visible')
-      .should('contain', 'Email Address already exist!')
-      .and('contain.text', 'Email Address already exist!')
+    login.acessarLogin()
+    cadastro.iniciarCadastro({
+      nome: 'PGATS Aut',
+      email: 'pgats-aut-test-1791030872114@mail.com'
+    })
+    cadastro.validarEmailJaCadastrado()
 
 
   });
