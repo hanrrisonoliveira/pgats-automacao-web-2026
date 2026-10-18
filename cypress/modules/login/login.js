@@ -1,4 +1,5 @@
 const seletores = {
+  login: 'a[href="/login"]',
   email: '[data-qa="login-email"]',
   senha: '[data-qa="login-password"]',
   botaoEntrar: '[data-qa="login-button"]',
@@ -9,7 +10,7 @@ const seletores = {
 };
 
 function acessarLogin() {
-  cy.visit('https://www.automationexercise.com/login');
+  cy.get(seletores.login).click();
 }
 
 function efetuarLogin(email, senha) {
