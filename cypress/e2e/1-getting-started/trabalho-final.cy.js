@@ -179,4 +179,33 @@ describe('Automation Exercise', () => {
     cadastro.continuar()
   })
 
+  it.only('Test Case 16: Place Order: Login before Checkout', () => {
+    const pagamento = {
+      nome: faker.person.fullName(),
+      numero: faker.string.numeric(16),
+      cvc: faker.string.numeric(3),
+      mes: '12',
+      ano: '2030'
+    }
+
+    cy.visit('/')
+    paginaInicial.validarPaginaInicial()
+    login.acessarLogin()
+    login.efetuarLogin('pgats-aut-test-1791030872114@mail.com', '12345')
+    usuarioModulo.validarUsuarioAutenticado('PGATS Aut')
+    produto.acessarProdutos()
+    produto.validarPaginaTodosProdutos()
+    pedido.adicionarProdutosAoCarrinho()
+    pedido.acessarCarrinho()
+    pedido.validarCarrinhoVisivel()
+    pedido.prosseguirParaCheckout()
+    pedido.validarDetalhesDoCheckout()
+    pedido.informarComentarioEProsseguir('Pedido criado pelo Test Case 16')
+    pedido.preencherDadosDePagamento(pagamento)
+    pedido.confirmarPedido()
+    cadastro.excluirConta()
+    cadastro.validarContaExcluida()
+    cadastro.continuar()
+  })
+
 })
