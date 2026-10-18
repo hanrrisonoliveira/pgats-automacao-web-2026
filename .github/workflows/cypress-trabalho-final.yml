@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout do repositório
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Executar trabalho-final.cy.js
         id: cypress
@@ -31,7 +31,7 @@ jobs:
 
       - name: Publicar relatório Allure
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: allure-report
           path: allure-report
