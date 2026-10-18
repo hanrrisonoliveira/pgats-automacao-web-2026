@@ -58,7 +58,9 @@ function criarConta() {
 }
 
 function validarContaCriada() {
-  cy.get(seletores.contaCriada).should('be.visible').and('contain', 'Account Created!');
+  cy.get(seletores.contaCriada)
+    .should('be.visible')
+    .and('contain', 'Account Created!');
 }
 
 function continuar() { 
@@ -66,11 +68,16 @@ function continuar() {
 }
 
 function excluirConta() {
-  cy.get(seletores.excluirConta).should('be.visible').and('contain', 'Delete Account').click();
+  cy.get(seletores.excluirConta)
+    .should('be.visible')
+    .and('contain', 'Delete Account')
+    .click();
 }
 
 function validarContaExcluida() {
-  cy.get(seletores.contaExcluida).should('be.visible').and('contain', 'Account Deleted!');
+  cy.get(seletores.contaExcluida).
+  should('be.visible')
+  .and('contain', 'Account Deleted!');
 }
 
 function validarEmailJaCadastrado() {
