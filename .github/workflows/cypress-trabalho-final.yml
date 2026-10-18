@@ -1,0 +1,42 @@
+name: Cypress - Trabalho Final
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cypress:
+    name: Teste trabalho-final.cy.js
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Executar trabalho-final.cy.js
+        id: cypress
+        continue-on-error: true
+        uses: cypress-io/github-action@v7
+        with:
+          browser: chrome
+          spec: cypress/e2e/1-getting-started/trabalho-final.cy.js
+
+      - name: Gerar relatório Allure
+        if: always()
+        run: npx allure generate allure-results --clean -o allure-report
+
+      - name: Publicar relatório Allure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+          if-no-files-found: warn
+
+      - name: Propagar falha dos testes
+        if: steps.cypress.outcome == 'failure'
+        run: exit 1
