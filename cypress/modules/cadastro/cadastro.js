@@ -34,6 +34,14 @@ function iniciarCadastro(usuario) {
   cy.get(seletores.iniciarCadastro).click();
 }
 
+function cadastrarUsuario(usuario) {
+  iniciarCadastro(usuario)
+  preencherDadosDaConta(usuario)
+  criarConta()
+  validarContaCriada()
+  continuar()
+}
+
 function preencherDadosDaConta(usuario) {
   cy.get(seletores.genero).check();
   cy.get(seletores.senha).type(usuario.senha);
@@ -88,6 +96,7 @@ function validarEmailJaCadastrado() {
 
 module.exports = {
   iniciarCadastro,
+  cadastrarUsuario,
   preencherDadosDaConta,
   criarConta,
   validarContaCriada,
